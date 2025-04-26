@@ -4,8 +4,8 @@ import PaymentController from "../../controllers/payment/payment.controller";
 const paymentRoutes = Router();
 
 // Rotas POST
-paymentRoutes.post("/", PaymentController.create);
 paymentRoutes.post("/create", PaymentController.createPayment);
+paymentRoutes.post("/", PaymentController.create);
 
 // Rotas GET
 paymentRoutes.get("/", PaymentController.findAll);

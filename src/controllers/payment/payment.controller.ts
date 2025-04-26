@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import paymentService from "../../services/payment/payment.service";
 import { TPaymentModel } from "../../models/payment/interfaces/Payment.model";
+import { sendTrackingCodeEmail } from "../../services/email/email.service"; 
 
 async function findAll(req: Request, res: Response): Promise<void> {
     /*
@@ -90,6 +91,11 @@ async function createPayment(req: Request, res: Response): Promise<void> {
     try {
         const body = req.body;
         const paymentResult = await paymentService.createPaymentUsecase(body);
+
+        // Se pagamento aprovado, envia o e-mail com rastreio
+        if (body.quotationEmail) {
+            await sendTrackingCodeEmail(body.quotationEmail, body.deliveryProcessId);
+        }
 
         res.status(201).send(paymentResult);
     } catch (error) {
