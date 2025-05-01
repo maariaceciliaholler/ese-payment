@@ -43,7 +43,7 @@ class SequelizeAdapter {
 
     public async connectDataBase(forceSync?: boolean) {
         const databaseInstance = new Sequelize({
-            database: process.env.POSTGRES_DB,
+            database: process.env.PAYMENT_DB,
             username: process.env.POSTGRES_USER,
             password: process.env.POSTGRES_PASSWORD,
             port: Number(process.env.POSTGRES_PORT),

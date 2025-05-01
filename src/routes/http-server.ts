@@ -24,7 +24,7 @@ class ExpressServerAdapter {
     }
 
     runHttpServer() {
-        const HTTP_PORT = process.env.APP_PORT;
+        const HTTP_PORT = process.env.PAYMENT_APP_PORT;
         this.registerMiddlewares();
         this.expressServer.listen(HTTP_PORT, () => {
             console.log(`ExpressHttpServer app listening on port ${HTTP_PORT}`);
