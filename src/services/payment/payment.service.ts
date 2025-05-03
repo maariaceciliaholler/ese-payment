@@ -1,8 +1,7 @@
 import { TPaymentModel } from "../../models/payment/interfaces/Payment.model";
 import paymentRepository from "../../repositories/payment/payment.repository";
-import deliveryProcessRepository from "../../repositories/delivery-process/delivery-process.repository";
+// import deliveryProcessRepository from "../../repositories/delivery-process/delivery-process.repository";
 import { PAYMENT_STATUS } from "../../constants/payment-status.const";
-import { DELIVERY_PROCESS_STATUS } from "../../constants/delivery-process-status.const";
 import { sendTrackingCodeEmail } from "../../services/email/email.service";
 
 class PaymentService {
@@ -34,12 +33,12 @@ class PaymentService {
                 },
             });
     
-            await deliveryProcessRepository.update({
-                data: {
-                    id: data.deliveryProcessId,
-                    status: DELIVERY_PROCESS_STATUS.INVOICED,
-                },
-            });
+            // await deliveryProcessRepository.update({
+            //     data: {
+            //         id: data.deliveryProcessId,
+            //         status: DELIVERY_PROCESS_STATUS.INVOICED,
+            //     },
+            // });
     
             await sendTrackingCodeEmail(data.quotationEmail, data.deliveryProcessId);
     

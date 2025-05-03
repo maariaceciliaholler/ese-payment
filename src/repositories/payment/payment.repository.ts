@@ -1,7 +1,6 @@
 import IBaseRepository from "../base.repository";
 import { TPaymentModel } from "../../models/payment/interfaces/Payment.model";
 import Payment from "../../models/payment/Payment";
-import DeliveryProcess from "../../models/delivery/DeliveryProcess";
 import { z } from "zod";
 
 const TPaymentSchema = z.object({
@@ -12,26 +11,13 @@ const TPaymentSchema = z.object({
 
 class PaymentRepository implements IBaseRepository<TPaymentModel> {
     async findAll(): Promise<TPaymentModel[]> {
-        const findAllResult = await Payment.findAll({
-            include: [
-                {
-                    model: DeliveryProcess,
-                    required: false,
-                },
-            ],
-        });
+        const findAllResult = await Payment.findAll();
         return findAllResult;
     }
 
     async findOne({ id }: { id: string }): Promise<TPaymentModel | null> {
         const findOneResult = await Payment.findOne({
             where: { id },
-            include: [
-                {
-                    model: DeliveryProcess,
-                    required: false,
-                },
-            ],
         });
         return findOneResult;
     }

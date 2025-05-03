@@ -1,5 +1,4 @@
-import { Model, DataType, Table, Column, ForeignKey, BelongsTo } from "sequelize-typescript";
-import DeliveryProcess from "../delivery/DeliveryProcess";
+import { Model, DataType, Table, Column } from "sequelize-typescript";
 import TPaymentModel from "../payment/interfaces/Payment.model";
 
 @Table({
@@ -19,27 +18,23 @@ class Payment extends Model<TPaymentModel> {
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
-        field: "pa_status", 
+        field: "pa_status",
     })
     status!: string;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
-        field: "pa_type", 
+        field: "pa_type",
     })
     paymentType!: string;
 
-    @ForeignKey(() => DeliveryProcess)
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
-        field: "fk_delivery_process",
+        field: "fk_delivery_process", 
     })
     deliveryProcessId!: number;
-
-    @BelongsTo(() => DeliveryProcess, "fk_delivery_process")
-    deliveryProcess?: DeliveryProcess;
 
     @Column({
         type: DataType.DATE,
