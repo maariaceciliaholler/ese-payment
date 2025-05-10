@@ -4,19 +4,6 @@ import { TPaymentModel } from "../../models/payment/interfaces/Payment.model";
 import { sendTrackingCodeEmail } from "../../services/email/email.service"; 
 
 async function findAll(req: Request, res: Response): Promise<void> {
-    /*
-    // Verificar token
-    const token = req.headers.authorization?.split(" ")[1]; // Bearer <token>
-    if (!token) {
-        res.status(401).send("Token não fornecido");
-        return;
-    }
-    const isValidToken = await verifyToken(token);
-    if (!isValidToken) {
-        res.status(403).send("Token inválido");
-        return;
-    }
-    */
     try {
         const findAllResult = await paymentService.findAll();
         res.status(200).send(findAllResult);
@@ -27,19 +14,6 @@ async function findAll(req: Request, res: Response): Promise<void> {
 }
 
 async function findOne(req: Request, res: Response): Promise<void> {
-    /*
-    // Verificar token
-    const token = req.headers.authorization?.split(" ")[1];
-    if (!token) {
-        res.status(401).send("Token não fornecido");
-        return;
-    }
-    const isValidToken = await verifyToken(token);
-    if (!isValidToken) {
-        res.status(403).send("Token inválido");
-        return;
-    }
-    */
     try {
         const idToFind = req.params.id;
         const findOneResult = await paymentService.findOne(idToFind);
@@ -51,19 +25,6 @@ async function findOne(req: Request, res: Response): Promise<void> {
 }
 
 async function create(req: Request<{}, {}, TPaymentModel>, res: Response): Promise<void> {
-    /*
-    // Verificar token
-    const token = req.headers.authorization?.split(" ")[1];
-    if (!token) {
-        res.status(401).send("Token não fornecido");
-        return;
-    }
-    const isValidToken = await verifyToken(token);
-    if (!isValidToken) {
-        res.status(403).send("Token inválido");
-        return;
-    }
-    */
     try {
         const body = req.body;
         const createResult = await paymentService.create(body);
@@ -75,19 +36,6 @@ async function create(req: Request<{}, {}, TPaymentModel>, res: Response): Promi
 }
 
 async function createPayment(req: Request, res: Response): Promise<void> {
-    /*
-    // Verificar token
-    const token = req.headers.authorization?.split(" ")[1];
-    if (!token) {
-        res.status(401).send("Token não fornecido");
-        return;
-    }
-    const isValidToken = await verifyToken(token);
-    if (!isValidToken) {
-        res.status(403).send("Token inválido");
-        return;
-    }
-    */
     try {
         const body = req.body;
         const paymentResult = await paymentService.createPaymentUsecase(body);
@@ -105,19 +53,6 @@ async function createPayment(req: Request, res: Response): Promise<void> {
 }
 
 async function update(req: Request, res: Response): Promise<void> {
-    /*
-    // Verificar token
-    const token = req.headers.authorization?.split(" ")[1];
-    if (!token) {
-        res.status(401).send("Token não fornecido");
-        return;
-    }
-    const isValidToken = await verifyToken(token);
-    if (!isValidToken) {
-        res.status(403).send("Token inválido");
-        return;
-    }
-    */
     try {
         const body = req.body;
         const updateResult = await paymentService.update(body);
@@ -129,19 +64,6 @@ async function update(req: Request, res: Response): Promise<void> {
 }
 
 async function deleteOne(req: Request, res: Response): Promise<void> {
-    /*
-    // Verificar token
-    const token = req.headers.authorization?.split(" ")[1];
-    if (!token) {
-        res.status(401).send("Token não fornecido");
-        return;
-    }
-    const isValidToken = await verifyToken(token);
-    if (!isValidToken) {
-        res.status(403).send("Token inválido");
-        return;
-    }
-    */
     try {
         const idToFind = req.params.id;
         const deleteResult = await paymentService.deleteOne(idToFind);

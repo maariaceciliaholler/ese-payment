@@ -1,18 +1,14 @@
 import { Router } from "express";
 import PaymentController from "../../controllers/payment/payment.controller";
+import { checkAuth } from "../../middleware/checkAuth";
 
 const paymentRoutes = Router();
 
-// Rotas POST
-paymentRoutes.post("/create", PaymentController.createPayment);
-paymentRoutes.post("/", PaymentController.create);
-
-// Rotas GET
-paymentRoutes.get("/", PaymentController.findAll);
-paymentRoutes.get("/:id", PaymentController.findOne);
-
-// Rotas PUT e DELETE
-paymentRoutes.put("/:id", PaymentController.update);
-paymentRoutes.delete("/:id", PaymentController.deleteOne);
+paymentRoutes.post("/create", checkAuth, PaymentController.createPayment);
+paymentRoutes.post("/", checkAuth, PaymentController.create);
+paymentRoutes.get("/", checkAuth, PaymentController.findAll);
+paymentRoutes.get("/:id", checkAuth, PaymentController.findOne);
+paymentRoutes.put("/:id", checkAuth, PaymentController.update);
+paymentRoutes.delete("/:id", checkAuth, PaymentController.deleteOne);
 
 export default paymentRoutes;
