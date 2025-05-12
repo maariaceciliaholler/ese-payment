@@ -9,6 +9,14 @@ const corsOptions = {
     optionsSuccessStatus: 204,
 };
 
+const expressApp: Express = express();
+
+expressApp.use(cors(corsOptions));
+expressApp.use(express.json());
+expressApp.use(router);
+
+export const app = expressApp;
+
 class ExpressServerAdapter {
     expressServer: Express;
 
