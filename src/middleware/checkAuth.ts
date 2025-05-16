@@ -18,6 +18,7 @@ export function checkAuth(req: Request, res: Response, next: NextFunction): void
         (req as any).user = payload;
         next();
     } catch (err) {
+        console.error("Token inválido:", err);
         res.status(403).json({ error: "Token inválido." });
     }
 }
