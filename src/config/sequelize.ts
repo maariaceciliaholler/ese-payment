@@ -29,6 +29,7 @@ class SequelizeAdapter {
         try {
             await this.instance.authenticate();
             console.log("PostgreSQL Connection has been established successfully.");
+            await this.instance.sync({ alter: true });
         } catch (error) {
             console.error("Unable to connect to the PostgreSQL database:", error);
         }
