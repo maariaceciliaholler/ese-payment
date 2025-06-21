@@ -9,7 +9,7 @@ export async function authMiddleware(req: Request, res: Response, next: NextFunc
     const token = authHeader.split(" ")[1];
 
     try {
-        const authResponse = await fetch("http://ese-authentication:3000/api/auth/check", {
+        const authResponse = await fetch("http://api-gateway:8080/api/auth/check", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

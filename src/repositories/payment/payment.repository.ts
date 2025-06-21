@@ -6,7 +6,7 @@ import { z } from "zod";
 const TPaymentSchema = z.object({
     status: z.string().nonempty(),
     paymentType: z.string().nonempty(),
-    deliveryProcessId: z.number(),
+    deliveryProcessId: z.string().uuid(),
 });
 
 class PaymentRepository implements IBaseRepository<TPaymentModel> {

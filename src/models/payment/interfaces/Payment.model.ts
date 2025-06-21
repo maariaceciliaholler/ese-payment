@@ -4,7 +4,7 @@ export type TPaymentModel = {
     id?: number;
     status: string;
     paymentType: string;
-    deliveryProcessId: number;
+    deliveryProcessId: string;
     deliveryProcess?: any;
 } & TBaseModel;
 

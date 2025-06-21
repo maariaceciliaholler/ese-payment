@@ -29,12 +29,12 @@ class Payment extends Model<TPaymentModel> {
     })
     paymentType!: string;
 
-    @Column({
-        type: DataType.INTEGER,
+     @Column({
+        type: DataType.UUID,
         allowNull: false,
-        field: "fk_delivery_process", 
+        field: "fk_delivery_process_uuid",
     })
-    deliveryProcessId!: number;
+    deliveryProcessId!: string;
 
     @Column({
         type: DataType.DATE,

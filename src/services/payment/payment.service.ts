@@ -1,13 +1,15 @@
 import { TPaymentModel } from "../../models/payment/interfaces/Payment.model";
 import paymentRepository from "../../repositories/payment/payment.repository";
-// import deliveryProcessRepository from "../../repositories/delivery-process/delivery-process.repository";
 import { PAYMENT_STATUS } from "../../constants/payment-status.const";
 import { sendTrackingCodeEmail } from "../../services/email/email.service";
 import { z } from "zod";
+import { updateDeliveryProcessMiddleware } from "../../middleware/tracking.middleware";
+
+const INVOICED_STATUS_ID = 'b7aaddff-9a84-4e2e-91e7-383b409aef4a';
 
 const paymentInputSchema = z.object({
     paymentType: z.string().nonempty(),
-    deliveryProcessId: z.number(),
+    deliveryProcessId: z.string().uuid(),
     quotationEmail: z.string().email(),
   });
 
@@ -23,7 +25,11 @@ class PaymentService {
     async create(data: TPaymentModel) {
         return paymentRepository.create({ data });
     }
-    async createPaymentUsecase(data: any) {
+    async createPaymentUsecase(data: {
+        paymentType: string;
+        deliveryProcessId: string;
+        quotationEmail: string;
+      }, token: string) {
         try {
           paymentInputSchema.parse(data);
     
@@ -36,18 +42,22 @@ class PaymentService {
               createdBy: "",
             },
           });
-          // await deliveryProcessRepository.update({
-            //     data: {
-            //         id: data.deliveryProcessId,
-            //         status: DELIVERY_PROCESS_STATUS.INVOICED,
-            //     },
-            // });
-
+          
+          await updateDeliveryProcessMiddleware(
+            data.deliveryProcessId,
+            { statusId: INVOICED_STATUS_ID },   
+            token
+          );
           await sendTrackingCodeEmail(data.quotationEmail, data.deliveryProcessId);
           return payment;
         } catch (error) {
-          throw new Error("Entrada inválida: " + error);
-        }
+  console.error('ERRO COMPLETO ►', error);        
+  if (error instanceof Error) {
+    console.error('MESSAGE ►', error.message);
+  }
+  throw new Error('Entrada inválida');
+}
+
     }
     
     async update(data: TPaymentModel) {

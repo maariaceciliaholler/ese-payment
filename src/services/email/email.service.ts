@@ -1,6 +1,6 @@
 import { transporter } from './email-config';
 
-async function sendTrackingCodeEmail(email: string, code: number) {
+async function sendTrackingCodeEmail(email: string, code: string) {
     const mailOptions = {
         from: 'nhs-log@hotmail.com',
         to: email,
