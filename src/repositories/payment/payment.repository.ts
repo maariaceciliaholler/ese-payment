@@ -1,12 +1,12 @@
-import IBaseRepository from "../base.repository";
+import { z } from "zod";
 import { TPaymentModel } from "../../models/payment/interfaces/Payment.model";
 import Payment from "../../models/payment/Payment";
-import { z } from "zod";
+import IBaseRepository from "../base.repository";
 
 const TPaymentSchema = z.object({
     status: z.string().nonempty(),
     paymentType: z.string().nonempty(),
-    deliveryProcessId: z.string().uuid(),
+    deliveryProcessId: z.number(),
 });
 
 class PaymentRepository implements IBaseRepository<TPaymentModel> {
@@ -43,7 +43,9 @@ class PaymentRepository implements IBaseRepository<TPaymentModel> {
         try {
             await TPaymentSchema.parseAsync(data);
         } catch (error) {
-            throw new Error("Erro. Os campos obrigatórios de pagamento devem ser preenchidos corretamente!");
+            throw new Error(
+                "Erro. Os campos obrigatórios de pagamento devem ser preenchidos corretamente!"
+            );
         }
     }
 }

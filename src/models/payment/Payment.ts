@@ -1,4 +1,4 @@
-import { Model, DataType, Table, Column } from "sequelize-typescript";
+import { Column, DataType, Model, Table } from "sequelize-typescript";
 import TPaymentModel from "../payment/interfaces/Payment.model";
 
 @Table({
@@ -29,12 +29,12 @@ class Payment extends Model<TPaymentModel> {
     })
     paymentType!: string;
 
-     @Column({
-        type: DataType.UUID,
+    @Column({
+        type: DataType.INTEGER,
         allowNull: false,
-        field: "fk_delivery_process_uuid",
+        field: "fk_delivery_process",
     })
-    deliveryProcessId!: string;
+    deliveryProcessId!: number;
 
     @Column({
         type: DataType.DATE,

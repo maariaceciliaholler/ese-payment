@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import paymentService from "../../services/payment/payment.service";
 import { TPaymentModel } from "../../models/payment/interfaces/Payment.model";
+import paymentService from "../../services/payment/payment.service";
 
 async function findAll(req: Request, res: Response): Promise<void> {
     try {
@@ -35,27 +35,23 @@ async function create(req: Request<{}, {}, TPaymentModel>, res: Response): Promi
 }
 
 async function createPayment(req: Request, res: Response): Promise<void> {
-  try {
-    const authHeader = req.headers.authorization;
-    if (!authHeader?.startsWith("Bearer ")) {
-      res.status(401).send("Token ausente");
-      return;
+    try {
+        const authHeader = req.headers.authorization;
+        if (!authHeader?.startsWith("Bearer ")) {
+            res.status(401).send("Token ausente");
+            return;
+        }
+        const token = authHeader.split(" ")[1];
+
+        const body = req.body;
+        const paymentResult = await paymentService.createPaymentUsecase(body, token);
+
+        res.status(201).send(paymentResult);
+    } catch (error) {
+        console.error({ error });
+        res.status(500).send(error);
     }
-    const token = authHeader.split(" ")[1];
-
-    const body = req.body;
-    const paymentResult = await paymentService.createPaymentUsecase(
-      body,
-      token
-    );
-
-    res.status(201).send(paymentResult);
-  } catch (error) {
-    console.error({ error });
-    res.status(500).send(error);
-  }
 }
-
 
 async function update(req: Request, res: Response): Promise<void> {
     try {
