@@ -6,7 +6,7 @@ describe("RT003 - Buscar pagamento por ID", () => {
       id: 1,
       status: "Aprovado",
       paymentType: "PIX",
-      deliveryProcessId: 10, 
+      deliveryProcessId: 1,
     };
 
     jest.spyOn(paymentService, "findOne").mockResolvedValue(mockPayment);

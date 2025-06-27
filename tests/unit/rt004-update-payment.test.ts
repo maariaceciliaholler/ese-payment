@@ -6,7 +6,7 @@ describe("RT004 - Atualizar pagamento", () => {
       id: 1,
       status: "Reprovado",
       paymentType: "PIX",
-      deliveryProcessId: 10,
+      deliveryProcessId: 1,
     };
 
     jest.spyOn(paymentService, "update").mockResolvedValue(updatedPayment);

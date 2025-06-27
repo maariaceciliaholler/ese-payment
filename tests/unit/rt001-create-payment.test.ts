@@ -14,8 +14,8 @@ describe("RT001 - Criar pagamento", () => {
   it("deve criar um pagamento válido", async () => {
     const input = {
       paymentType: "PIX",
-      deliveryProcessId: 123,
-      quotationEmail: "cliente@email.com",
+      deliveryProcessId: 1,
+      quotationEmail: "mariaceciliaholler@gmail.com",
     };
 
     mockCreate.mockResolvedValue({
@@ -26,12 +26,12 @@ describe("RT001 - Criar pagamento", () => {
       createdBy: "",
     });
 
-    const result = await paymentService.createPaymentUsecase(input);
+    const result = await paymentService.createPaymentUsecase(input, "fake-token");
 
     expect(mockCreate).toHaveBeenCalledWith({
       data: expect.objectContaining({
         paymentType: "PIX",
-        deliveryProcessId: 123,
+        deliveryProcessId: 1,
         status: PAYMENT_STATUS.APPROVED,
       }),
     });
@@ -41,11 +41,11 @@ describe("RT001 - Criar pagamento", () => {
 
   it("deve lançar erro se faltar tipo de pagamento", async () => {
     const input = {
-      deliveryProcessId: 123,
-      quotationEmail: "cliente@email.com",
+      deliveryProcessId: 1,
+      quotationEmail: "mariaceciliaholler@gmail.com",
     };
 
-    await expect(paymentService.createPaymentUsecase(input as any)).rejects.toThrow();
+    await expect(paymentService.createPaymentUsecase(input as any, "fake-token")).rejects.toThrow();
     expect(mockCreate).not.toHaveBeenCalled();
   });
 });

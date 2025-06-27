@@ -1,33 +1,38 @@
 import request from "supertest";
 import app from "../../src/app";
-import jwt from "jsonwebtoken";
+import { setupDB, closeDB } from "../test-utils";
+import { getValidToken } from "../main.test-auth";
+
+jest.unmock("../../src/middleware/auth.middleware.ts");
 
 describe("RT001 - Integração - Criar Pagamento", () => {
-  it("deve criar um pagamento com token válido", async () => {
-    const JWT_SECRET = process.env.JWT_SECRET || "default_jwt_secret";
+  let token: string;
 
-    // Gere o token manualmente com o payload esperado
-    const token = jwt.sign(
-      {
-        id: 1,
-        email: "maria@email.com",
-        role: "ADMIN"
-      },
-      JWT_SECRET,
-      { expiresIn: "1h" }
-    );
+  beforeAll(async () => {
+    await setupDB();
+    token = await getValidToken();
+  });
+
+  afterAll(closeDB);
+
+  it("deve criar um pagamento com token válido", async () => {
+    const payload = {
+      paymentType: "PIX",
+      deliveryProcessId: 1,
+      quotationEmail: "mariaceciliaholler@gmail.com"
+    };
 
     const response = await request(app)
       .post("/api/payment/create")
       .set("Authorization", `Bearer ${token}`)
-      .send({
-        paymentType: "PIX",
-        deliveryProcessId: 123,
-        quotationEmail: "cliente@email.com",
-      });
+      .send(payload);
+      
+    if (response.status !== 201) {
+      console.error("Erro na criação do pagamento:", response.body);
+    }
 
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty("id");
-    expect(response.body.paymentType).toBe("PIX");
+    expect(response.body.paymentType).toBe(payload.paymentType);
   });
 });
