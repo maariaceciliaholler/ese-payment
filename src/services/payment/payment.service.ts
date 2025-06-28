@@ -38,6 +38,7 @@ class PaymentService {
             await updateDeliveryProcessMiddleware(data.deliveryProcessId, { statusId: 3 }, token);
 
             await sendTrackingCodeEmail(data.quotationEmail, data.deliveryProcessId);
+            console.log("test");
             return payment;
         } catch (error) {
             console.error("ERRO COMPLETO ►", error);

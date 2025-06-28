@@ -14,7 +14,7 @@ describe("RT001 - Criar pagamento", () => {
   it("deve criar um pagamento válido", async () => {
     const input = {
       paymentType: "PIX",
-      deliveryProcessId: 1,
+      deliveryProcessId: 999,
       quotationEmail: "mariaceciliaholler@gmail.com",
     };
 
